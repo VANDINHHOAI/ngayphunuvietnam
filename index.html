@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Women's Day</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<body>
+    <!-- Loader -->
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+
+    <div id="main-content" style="display:none;">
+        <h1 id="title">Happy Vietnamese Women's Day</h1>
+
+        <button id="fillButton">
+            <i class="fa-solid fa-gift"></i>
+        </button>
+
+        <button class="envelope-btn" id="envelopeBtn">
+            <img src="envelope.png" alt="" srcset="">
+        </button>
+
+        <div class="congratulation" id="congratulationText">
+            <p class="happyText">Chúc Mừng<br> Ngày Phụ Nữ <br> Việt Nam</p>
+            <span>20/10</span>
+        </div>
+
+        <!-- Popup -->
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <div id="close-popup" class="close">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+                <p id="popup-message"></p>
+            </div>
+        </div>
+
+        <audio id="bgMusic" src="you and me (piano).mp3"></audio>
+    </div>
+
+    
+</body>
+<script src="app.js"></script>
+</html>

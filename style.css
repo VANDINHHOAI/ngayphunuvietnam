@@ -1,0 +1,452 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: "Great Vibes", cursive; */
+
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('image.png'); /* đường dẫn ảnh */
+    background-size: cover; /* phóng to vừa đủ để phủ toàn màn hình */
+    background-position: center; /* căn giữa ảnh */
+    background-repeat: no-repeat;
+}
+
+body #main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Loader container */
+.loader-container {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Thanh loader mới */
+.loader {
+    position: relative;
+    width: 280px;
+    height: 22px;
+    border-radius: 50px;
+    background: #f1f1f1;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Phần màu chạy */
+.loader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 50px;
+    background: linear-gradient(90deg, #ff5fa2, #ff9966, #ff5fa2);
+    background-size: 200% 100%;
+    animation: loading_slow 10s ease-in-out forwards, gradientMove 3s linear infinite;
+}
+
+/* Phần trăm */
+.loader::after {
+    content: "0%";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    color: #fff;
+    letter-spacing: 1px;
+    animation: percentage_slow 10s ease-in-out forwards;
+}
+
+/* Hiệu ứng "mạng yếu" – lúc đầu nhanh, giữa chậm, cuối nhanh */
+@keyframes loading_slow {
+    0% { width: 0%; }
+    10% { width: 35%; }
+    30% { width: 45%; }
+    60% { width: 55%; }
+    80% { width: 75%; }
+    100% { width: 100%; }
+}
+
+/* Cập nhật số phần trăm hiển thị */
+@keyframes percentage_slow {
+    0% { content: "0%"; }
+    10% { content: "35%"; }
+    30% { content: "45%"; }
+    60% { content: "55%"; }
+    80% { content: "75%"; }
+    100% { content: "100%"; }
+}
+
+/* Gradient chuyển động mềm mại */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: transparent;
+    -webkit-text-stroke: 1px #ff69b4;
+    background: linear-gradient(to right, #ff69b4 0%, #ff69b4 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: 0% 100%;
+    transition: background-size 1s ease;
+    background-repeat: no-repeat;
+    text-align: center;
+    margin-bottom: 50px;
+    z-index: 1;
+}
+
+h1.glow {
+    animation: glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% {
+        text-shadow: 0 0 5px #ff9acb, 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+    }
+    100% {
+        text-shadow: 0 0 10px #ffc0db, 0 0 20px #ff85c1, 0 0 30px #ff69b4;
+    }
+} 
+
+#fillButton {
+    padding: 17px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 2px solid #ff69b4;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    font-size: 15px;
+    color: #ff69b4;
+    transition: all 0.5s ease;
+    z-index: 1;
+}
+
+#fillButton:hover {
+    letter-spacing: 3px;
+    background-color: #ff69b4;
+    color: white;
+    box-shadow: rgb(230, 96, 223) 0px 7px 29px 0px;
+}
+
+#fillButton:active {
+    letter-spacing: 3px;
+    background-color: #ff69b4;
+    color: white;
+    box-shadow: rgb(230, 96, 223) 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+}
+
+#fillButton:disabled {
+    opacity: 0;
+    cursor: default;
+    transform: none;
+}
+
+/* --- hiệu ứng hộp quà --- */
+.gift {
+    position: absolute;
+    bottom: 200px; /* xuất phát ngay phía trên nút */
+    font-size: 18px;
+    animation: flyUp 1.6s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes flyUp {
+    0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    70% {
+        transform: translateY(-120px) scale(1.2) rotate(10deg);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(-180px) scale(0.8) rotate(-15deg);
+        opacity: 0;
+    }
+}
+
+/* Hiệu ứng bay chữ lên và biến mất */
+@keyframes flyUpText {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-200px);
+        opacity: 0;
+    }
+}
+
+@keyframes flyDownText {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(50px);
+        opacity: 1;
+    }
+}
+
+.fly-up {
+    animation: flyUpText 2s ease-out forwards !important;
+    transition: none !important;
+    -webkit-text-stroke: 1px white; /* viền trắng khi bay lên */
+}
+
+.fly-down {
+    animation: flyDownText 2s ease-out forwards !important;
+    transition: none !important;
+}
+
+
+.envelope-btn {
+    width: 100px;        
+    background: none;       
+    border: none;           
+    cursor: pointer;        
+    padding: 0;             
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    position: absolute;
+    z-index: 100;
+}
+
+.envelope-btn img{
+    width: 100%;
+    object-fit: cover;
+}
+
+.envelope-btn:hover {
+  transform: scale(1.05); /* phóng to nhẹ khi hover */
+}
+
+.envelope-btn:active {
+  transform: scale(0.95); /* nhấn xuống nhẹ khi click */
+}
+
+.congratulation {
+    font-family: "Great Vibes", cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px 0;
+    color: red;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+}
+
+.congratulation p {
+    font-size: 78px;
+}
+
+.congratulation span {
+    font-size: 62px;
+}
+
+/* --- Hoa rơi --- */
+.flower {
+    position: fixed;
+    top: -50px; /* bắt đầu trên màn hình */
+    font-size: 24px;
+    pointer-events: none;
+    user-select: none;
+    animation: fall 5s linear forwards;
+    z-index: 5;
+    text-shadow:
+        0 0 6px rgba(255, 182, 193, 0.7),
+        0 0 12px rgba(255, 105, 180, 0.5),
+        0 0 18px rgba(255, 192, 203, 0.4);
+    filter: brightness(1.1);
+}
+.flower.glow {
+    text-shadow:
+        0 0 8px rgba(255, 182, 193, 1),
+        0 0 16px rgba(255, 105, 180, 0.8),
+        0 0 24px rgba(255, 192, 203, 0.6);
+    filter: brightness(1.3);
+}
+
+@keyframes fall {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(30px, 50vh) rotate(180deg);
+    }
+    100% {
+        transform: translate(-30px, 110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes fall2 {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-40px, 50vh) rotate(-180deg);
+    }
+    100% {
+        transform: translate(40px, 110vh) rotate(-360deg);
+        opacity: 0;
+    }
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('hinh-nen-hoa-hong.jpg'); /* đường dẫn ảnh */
+    background-size: cover; /* phóng to vừa đủ để phủ toàn màn hình */
+    background-position: center; /* căn giữa ảnh */
+    background-repeat: no-repeat;
+    padding: 30px;
+    border: 3px solid #FF69B4;
+    border-radius: 20px;
+    max-width: 850px;
+    width: 90%;
+    height: 400px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: popupFadeIn 0.4s ease-out;
+}
+
+@keyframes popupFadeIn {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(50px);
+        opacity: 1;
+    }
+}
+
+#popup-message {
+    width: 90%;                
+    max-width: 900px;
+    margin: 0;
+    text-align: center;          
+    white-space: pre-wrap;      /* cho phép \n có hiệu lực + wrap bình thường */
+    line-height: 1.6;           /* tăng để chữ script không chồng */
+    font-size: 32px;            /* chỉnh theo thẩm mỹ */
+    font-family: 'Great Vibes', cursive; /* hoặc Playfair nếu bạn dùng serif */
+    color: #e81124;             /* màu chữ */
+    padding: 0;
+    word-break: keep-all;       /* Giữ cụm từ không tách lung tung */
+}
+
+#popup-message span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: fadeInChar 260ms ease forwards;
+}
+
+@keyframes fadeInChar {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.popup .close {
+    background: white;
+    padding: 10px;
+    border-radius: 50%;
+    border: 3px solid #FF69B4;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 15px;
+    cursor: pointer;
+    color: #ff5b5b;
+    font-weight: bold;
+    transition: color 0.5s;
+}
+
+.popup .close:hover {
+    color: white;
+    background: red;
+}
+
+#close-popup.disabled {
+    opacity: 1;
+    cursor: not-allowed;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+
+/* ========== Hiệu ứng chữ đánh máy ========= */
+.popup-content span,
+.message span {
+    display: inline-block;
+    opacity: 0;
+    animation: fadeInLetter 0.3s forwards;
+}
+
+@keyframes fadeInLetter {
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    #main-content h1 {
+        font-size: 50px;
+    }
+
+    .congratulation p {
+        font-size: 50px;
+    }
+
+    #popup-message {
+        font-size: 20px;
+    }
+}    
