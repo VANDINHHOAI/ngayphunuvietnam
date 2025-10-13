@@ -5,6 +5,9 @@ const btn = document.getElementById('envelopeBtn');
 const congratulationText = document.getElementById('congratulationText');
 const btnShow = document.getElementById("envelopeBtn");
 const gifts = ['🎁', '💝', '🎀', '💖', '🌸'];
+const clickSound = new Audio("walkman-button.mp3");
+clickSound.volume = 1; // chỉnh âm lượng (0.0 - 1.0)
+clickSound.load();
 let fillPercent = 0;
 let posX = 100, posY = 100; // vị trí ban đầu
 let velX = 2, velY = 2;     // vận tốc ban đầu
@@ -21,19 +24,22 @@ document.addEventListener("DOMContentLoaded", () => {
         loader.style.opacity = "0";
         loader.style.transition = "opacity 0.8s ease";
         setTimeout(() => {
-        loader.style.display = "none";
-        mainContent.style.display = "flex"; // Hiện nội dung trang
+            loader.style.display = "none";
+            mainContent.style.display = "flex"; // Hiện nội dung trang
         }, 800);
     }, 10000);
 });
 
 
 button.addEventListener('click', (e) => {
+    clickSound.currentTime = 0; // tua về đầu (để có thể nhấn liên tục)
+    clickSound.play();
+
     const gift = document.createElement('div');
     gift.classList.add('gift');
     gift.textContent = gifts[Math.floor(Math.random() * gifts.length)];
 
-    // tính vị trí ngẫu nhiên quanh nút cho sinh động
+    // tính vị trí ngẫu nhiên quanh nút
     const offsetX = (Math.random() - 0.5) * 100; // lệch trái/phải
     gift.style.left = `${e.target.offsetLeft + e.target.offsetWidth / 2 + offsetX}px`;
 
@@ -173,7 +179,7 @@ const messageText =
 
 let typingDone = false;
 
-// --- Hiệu ứng đánh chữ mượt + tự nhiên --- //
+// --- Hiệu ứng đánh chữ --- //
 function typePopupText(index = 0) {
     if (index >= messageText.length) {
         // ✅ Hoàn tất đánh chữ
