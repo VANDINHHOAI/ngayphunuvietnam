@@ -103,7 +103,7 @@ body #main-content {
 
 
 
-h1 {
+.main-title {
     font-family: 'Playfair Display', serif;
     font-size: 80px;
     color: transparent;
@@ -119,7 +119,7 @@ h1 {
     z-index: 1;
 }
 
-h1.glow {
+.main-title.glow {
     animation: glowPulse 2s infinite alternate;
 }
 
@@ -438,7 +438,7 @@ h1.glow {
 }
 
 @media (max-width: 768px) {
-    #main-content h1 {
+    #main-content .main-title {
         font-size: 50px;
     }
 
