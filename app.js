@@ -6,47 +6,53 @@ const congratulationText = document.getElementById('congratulationText');
 const btnShow = document.getElementById("envelopeBtn");
 const gifts = ['🎁', '💝', '🎀', '💖', '🌸'];
 const clickSound = new Audio("walkman-button.mp3");
-clickSound.volume = 1; // chỉnh âm lượng (0.0 - 1.0)
+clickSound.volume = 1; 
 clickSound.load();
 let fillPercent = 0;
-let posX = 100, posY = 100; // vị trí ban đầu
-let velX = 2, velY = 2;     // vận tốc ban đầu
-const marginX = 20;  // khoảng cách mép trái/phải
-const marginY = 50;  // khoảng cách mép trên/dưới
+let posX = 100, posY = 100; 
+let velX = 2, velY = 2;     
+const marginX = 20;  
+const marginY = 50;  
 btnShow.style.display = "none";
 
 document.addEventListener("DOMContentLoaded", () => {
     const loader = document.querySelector(".loader-container");
     const mainContent = document.getElementById("main-content");
 
-    // Ẩn loader sau 10 giây (thời gian animation)
+    
     setTimeout(() => {
         loader.style.opacity = "0";
         loader.style.transition = "opacity 0.8s ease";
         setTimeout(() => {
             loader.style.display = "none";
-            mainContent.style.display = "flex"; // Hiện nội dung trang
+            mainContent.style.display = "flex"; 
         }, 800);
     }, 10000);
 });
 
+document.addEventListener('touchstart', () => {
+    clickSound.play().catch(()=>{});
+    clickSound.pause();
+    clickSound.currentTime = 0;
+}, { once: true }); 
+
 
 button.addEventListener('click', (e) => {
-    clickSound.currentTime = 0; // tua về đầu (để có thể nhấn liên tục)
+    clickSound.currentTime = 0; 
     clickSound.play();
 
     const gift = document.createElement('div');
     gift.classList.add('gift');
     gift.textContent = gifts[Math.floor(Math.random() * gifts.length)];
 
-    // tính vị trí ngẫu nhiên quanh nút
-    const offsetX = (Math.random() - 0.5) * 100; // lệch trái/phải
-    gift.style.left = `${e.target.offsetLeft + e.target.offsetWidth / 2 + offsetX}px`;
 
-    // thêm vào trang
+    const rect = button.getBoundingClientRect();
+    gift.style.left = rect.left + rect.width / 2 + 'px';
+    gift.style.top  = rect.top + rect.height / 2 + 'px';
+
+
     document.body.appendChild(gift);
 
-    // xoá sau khi animation kết thúc
     setTimeout(() => gift.remove(), 1600);
 
     if (fillPercent < 100) {
@@ -59,21 +65,20 @@ button.addEventListener('click', (e) => {
         fillPercent = 100;
     
         setTimeout(() => {
-            // Bắt đầu hiệu ứng sáng + nhạc
             title.classList.add('glow');
             music.play();
             music.loop = true;
 
-            // Sau 5 giây => chữ bay lên
+            
             setTimeout(startFlyUp, 5000);
         }, 1000);
 
         function startFlyUp() {
-            title.style.transition = 'none'; // tắt transition cũ
-            void title.offsetWidth;          // ép reflow
-            title.classList.add('fly-up');   // bay lên
+            title.style.transition = 'none';
+            void title.offsetWidth;         
+            title.classList.add('fly-up');  
 
-            // Sau 5 giây kể từ khi bay lên => hiện chữ khác
+
             setTimeout(() => {
                 congratulationText.classList.add('fly-down');
                 startFlowerRain();
@@ -90,25 +95,24 @@ function moveButton() {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
-    // cập nhật vị trí
+
     posX += velX;
     posY += velY;
 
-    // vùng giới hạn
+
     const minX = marginX;
     const maxX = screenWidth - rect.width - marginX;
     const minY = marginY;
     const maxY = screenHeight - rect.height - marginY;
 
-    // chạm biên -> đổi hướng
+
     if (posX <= minX || posX >= maxX) velX *= -1;
     if (posY <= minY || posY >= maxY) velY *= -1;
 
-    // giữ vị trí trong vùng hợp lệ
     posX = Math.max(minX, Math.min(posX, maxX));
     posY = Math.max(minY, Math.min(posY, maxY));
 
-    // áp dụng vị trí mới
+
     btn.style.left = posX + 'px';
     btn.style.top = posY + 'px';
 
@@ -116,7 +120,7 @@ function moveButton() {
     requestAnimationFrame(moveButton);
 }
 
-// Đặt vị trí ban đầu ở giữa vùng giới hạn
+
 const screenWidth = window.innerWidth;
 const screenHeight = window.innerHeight;
 posX = screenWidth / 2;
@@ -125,12 +129,11 @@ posY = screenHeight / 2;
 btn.style.left = posX + 'px';
 btn.style.top = posY + 'px';
 
-// Bắt đầu di chuyển
+
 moveButton();
 
-// Đổi hướng ngẫu nhiên mỗi 2–4 giây
 setInterval(() => {
-    velX = (Math.random() * 4 - 2) || 1; // tránh 0
+    velX = (Math.random() * 4 - 2) || 1; 
     velY = (Math.random() * 4 - 2) || 1;
 }, 2000 + Math.random() * 2000);
 
@@ -149,7 +152,7 @@ function startFlowerRain() {
         flower.style.fontSize = 14 + Math.random() * 26 + 'px';
         flower.style.animationDuration = 4 + Math.random() * 4 + 's';
 
-        // gió thổi ngẫu nhiên
+
         const wind = Math.random() < 0.5 ? '-' : '';
         flower.style.animationName = Math.random() > 0.5 ? 'fall' : 'fall2';
         flower.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.8 + Math.random() * 0.6})`;
@@ -162,10 +165,8 @@ function startFlowerRain() {
         setTimeout(() => flower.remove(), 8000);
     }, 1000);
 
-    // setTimeout(() => clearInterval(interval), 100000);
 }
 
-// ========= Hiển thị popup và đánh chữ bên trong =========
 const popup = document.getElementById("popup");
 const closeBtn = document.getElementById("close-popup");
 const popupMessage = document.getElementById("popup-message");
@@ -179,10 +180,10 @@ const messageText =
 
 let typingDone = false;
 
-// --- Hiệu ứng đánh chữ --- //
+
 function typePopupText(index = 0) {
     if (index >= messageText.length) {
-        // ✅ Hoàn tất đánh chữ
+
         typingDone = true;
         closeBtn.disabled = false;
         closeBtn.classList.remove("disabled");
@@ -197,7 +198,7 @@ function typePopupText(index = 0) {
     } else {
         const span = document.createElement("span");
         span.innerHTML = char;
-        span.style.animationDelay = `${index * 0.02}s`; // tạo cảm giác nhịp đều
+        span.style.animationDelay = `${index * 0.02}s`; 
         popupMessage.appendChild(span);
     }
 
@@ -208,7 +209,6 @@ function typePopupText(index = 0) {
     }, randomDelay);
     }
 
-    // --- Mở popup và chạy hiệu ứng --- //
     if (btnShow && popup) {
     btnShow.addEventListener("click", () => {
         popup.style.display = "flex";
@@ -217,7 +217,6 @@ function typePopupText(index = 0) {
 
         btnShow.style.display = "none";
 
-        // 🔒 Vô hiệu hóa nút tắt trong khi đang đánh chữ
         closeBtn.disabled = true;
         closeBtn.classList.add("disabled");
 
